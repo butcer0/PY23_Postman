@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "193da908-eb4f-4272-8902-576899aabd0e",
+		"name": "PY23",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30963298"
+	},
+	"item": [
+		{
+			"name": "UserProfile",
+			"item": [
+				{
+					"name": "local",
+					"item": [
+						{
+							"name": "Add UserProfile",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Check if the response status code is 201 Created or 200 OK\r",
+											"pm.test(\"Status code is 201 Created or 200 OK\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"\r",
+											"// Check if the Content-Type header is application/json\r",
+											"pm.test(\"Content-Type is application/json\", function () {\r",
+											"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');\r",
+											"});\r",
+											"\r",
+											"// Check if the response body is the correct format\r",
+											"pm.test(\"Response body has a UserId\", function () {\r",
+											"    let jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('UserId');\r",
+											"    pm.expect(jsonData.UserId).to.eql('user123'); // Replace with the expected UserId\r",
+											"});\r",
+											"\r",
+											"// Check if required properties are present\r",
+											"pm.test(\"Response body contains required UserProfile properties\", function () {\r",
+											"    let jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData).to.have.property('FirstName');\r",
+											"    pm.expect(jsonData).to.have.property('LastName');\r",
+											"    pm.expect(jsonData).to.have.property('Email');\r",
+											"    // Add more properties as required\r",
+											"});\r",
+											"\r",
+											"// Optionally, you can add a test to ensure that the response time is within a certain threshold\r",
+											"pm.test(\"Response time is less than 2000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"user-12345\",\r\n    \"userId\": \"john_doe_123\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phoneNumber\": \"123-456-7890\",\r\n    \"dateOfBirth\": \"1985-01-01T00:00:00Z\",\r\n    \"gender\": \"Male\",\r\n    \"profilePictureUrl\": \"http://example.com/profile.jpg\",\r\n    \"homeAddress\": {\r\n        \"street\": \"1234 Elm Street\",\r\n        \"city\": \"Anytown\",\r\n        \"state\": \"State\",\r\n        \"country\": \"Country\",\r\n        \"postalCode\": \"12345\"\r\n    },\r\n    \"travelPreferences\": {\r\n        \"languagesSpoken\": [\r\n            {\r\n                \"language\": \"English\",\r\n                \"proficiency\": \"NATIVE\"\r\n            },\r\n            {\r\n                \"language\": \"Spanish\",\r\n                \"proficiency\": \"FLUENT\"\r\n            },\r\n            {\r\n                \"language\": \"French\",\r\n                \"proficiency\": \"CONVERSATIONAL\"\r\n            }\r\n        ],\r\n        // Include other travel preferences as per your model\r\n    },\r\n    \"socialProfiles\": {\r\n        \"facebook\": \"http://facebook.com/johndoe\",\r\n        \"twitter\": \"http://twitter.com/johndoe\",\r\n        \"instagram\": \"http://instagram.com/johndoe\"\r\n    },\r\n    \"passportNumber\": \"P123456789\",\r\n    \"emergencyContact\": {\r\n        \"name\": \"Jane Doe\",\r\n        \"phone\": \"098-765-4321\",\r\n        \"relationship\": \"Sister\"\r\n    },\r\n    \"paymentMethodId\": \"pm_1Hh7Y2Iv\",\r\n    \"createdAt\": \"{{currentTimestamp}}\",\r\n    \"updatedAt\": \"{{currentTimestamp}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:7234/api/AddUserProfile",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "7234",
+									"path": [
+										"api",
+										"AddUserProfile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"let now = new Date().toISOString();",
+					"pm.variables.set(\"currentTimestamp\", now);"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
